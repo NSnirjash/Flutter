@@ -32,22 +32,26 @@ class PracticeHomePage extends StatelessWidget {
               onPressed: () {
                 showSnackBar("Comment page is empity", context);
               },
-              icon: Icon(Icons.comment)),
+              icon: Icon(Icons.comment)
+          ),
           IconButton(
               onPressed: () {
                 showSnackBar("Search page is empity", context);
               },
-              icon: Icon(Icons.search)),
+              icon: Icon(Icons.search)
+          ),
           IconButton(
               onPressed: () {
                 showSnackBar("Settings page is empity", context);
               },
-              icon: Icon(Icons.settings)),
+              icon: Icon(Icons.settings)
+          ),
           IconButton(
               onPressed: () {
                 showSnackBar("Notifications page is empity", context);
               },
-              icon: Icon(Icons.notifications)),
+              icon: Icon(Icons.notifications)
+          ),
         ],
       ),
 

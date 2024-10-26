@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:test_flutter/page/loginpage.dart';
 import 'package:test_flutter/page/practicehomepage.dart';
+import 'package:test_flutter/page/registrationpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(primarySwatch: Colors.indigo),
       color: Colors.red,
       debugShowCheckedModeBanner: false,
-      home: PracticeHomePage(),
+      home: RegistrationPage(),
 
 
     );
