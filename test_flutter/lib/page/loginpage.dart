@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_flutter/page/registrationpage.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -61,6 +62,27 @@ class LoginPage extends StatelessWidget {
                 ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue
+              ),
+            ),
+
+            SizedBox(
+                height: 20
+            ),
+
+            // Login Text Button
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegistrationPage()),
+                );
+              },
+              child: Text(
+                'Registration',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             )
           ],

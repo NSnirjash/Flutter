@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:dob_input_field/dob_input_field.dart';
+import 'package:http/http.dart'as http;
+import 'package:test_flutter/page/loginpage.dart';
 
 class RegistrationPage extends StatefulWidget {
 
@@ -24,23 +28,72 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final DateTimeFieldPickerPlatform dob = DateTimeFieldPickerPlatform.material;
 
   String? selectedGender;
+  DateTime? selectedDOB;
 
   final _formKey = GlobalKey<FormState>();
 
-  void _register() {
+  // void _register() {
+  //   if (_formKey.currentState!.validate()) {
+  //
+  //     String uName = name.text;
+  //     String uEmail = email.text;
+  //     String uPassword = password.text;
+  //
+  //     print('Name: $uName, Email: $uEmail, Password: $uPassword');
+  //   }
+  // }
+
+  void _register() async {
+
     if (_formKey.currentState!.validate()) {
-
-
       String uName = name.text;
       String uEmail = email.text;
       String uPassword = password.text;
+      String uCell = cell.text;
+      String uAddress = address.text;
+      String uGender = selectedGender ?? 'Other';
+      String uDob = selectedDOB != null ? selectedDOB!.toIso8601String() : '';
 
+      // Send data to the server
+      final response = await _sendDataToBackend(uName, uEmail, uPassword, uCell, uAddress, uGender, uDob);
 
-
-      // Registration logic goes here (e.g., sending data to server)
-
-      print('Name: $uName, Email: $uEmail, Password: $uPassword');
+      if (response.statusCode == 201 || response.statusCode == 200  ) {
+        // Registration successful
+        print('Registration successful!');
+      } else if (response.statusCode == 409) {
+        // User already exists
+        print('User already exists!');
+      } else {
+        print('Registration failed with status: ${response.statusCode}');
+      }
     }
+  }
+
+  Future<http.Response> _sendDataToBackend(
+      String name,
+      String email,
+      String password,
+      String cell,
+      String address,
+      String gender,
+      String dob,
+      ) async {
+
+    const String url = 'http://localhost:8090/register'; // Android emulator
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': name,
+        'email': email,
+        'password': password,
+        'cell': cell,
+        'address': address,
+        'gender': gender,
+        'dob': dob,
+      }),
+    );
+    return response;
   }
 
   @override
@@ -224,6 +277,27 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue
+              ),
+            ),
+
+            SizedBox(
+                height: 20
+            ),
+
+            // Login Text Button
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             )
           ],
