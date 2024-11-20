@@ -73,7 +73,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       String address,
       String role,
       ) async {
-    const String url = 'http://localhost:8090/register'; // Android emulator
+    // const String url = 'https://8ccf-103-205-69-8.ngrok-free.app/register'; // Android emulator
+    const String url = 'http://localhost:8090/register';
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
